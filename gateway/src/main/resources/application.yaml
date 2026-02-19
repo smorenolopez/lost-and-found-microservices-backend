@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: users-status-check
+              uri: lb://users
+              predicates:
+                - Path=/users/status/check
+                - Method=GET
+              filters:
+                - RemoveRequestHeader=Cookie
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka
